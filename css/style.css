@@ -1,0 +1,36 @@
+body{
+  background:  #ff661a;
+  font-family: Roboto;
+  /* background: #8E0E00; */
+}
+.container{
+  height: 700px;
+  width: 400px;
+  margin: 100px auto;
+  background: #f7f7f7;
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+  /* for getting rounded corners for the box */
+  box-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius:20px;
+}
+
+h1{
+  background: #1F030C;
+  color: white;
+	align-text:centre;
+  margin: 0;
+  padding: 10px 100px;
+  text-transform:uppercase;
+  font-size:18px;
+  font-weight: normal;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+}
+
+img {
+  display: block;
+  margin-top:200px;
+  margin-left: auto;
+  margin-right: auto;
+}
