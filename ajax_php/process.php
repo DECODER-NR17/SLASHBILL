@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include_once 'includes/dbh.inc.php';
     $netpaid=$_POST['netpaid'];
     $paid1=$_POST['paid'];
@@ -26,9 +27,12 @@
           }
         }
     }
+    if(isset($_SESSION['bill'])){
+      $bill_name=$_SESSION['bill'];
+    }
     $conn= mysqli_connect("localhost","root","","slashbill");
-    $sql = "INSERT INTO slashbill (member,give,receive,paid) VALUES (?,?,?,?)";
-    $q="SELECT DISTINCT member1 FROM member;";
+    $sql = "INSERT INTO slashbill (member,give,receive,paid,bill_name) VALUES (?,?,?,?,?)";
+    $q="SELECT DISTINCT member1 FROM member WHERE bill_name='$bill_name';";
     $q_r=mysqli_query($conn,$q);
     $name=array();
     while($row = mysqli_fetch_array($q_r)){
@@ -48,7 +52,7 @@
       if(!$stmt){
         die('Could not prepare statement');
       }
-      if(!$stmt->bind_param("ssss",$name[$x],$give[$x],$receive[$x],$paid1[$x])){
+      if(!$stmt->bind_param("sssss",$name[$x],$give[$x],$receive[$x],$paid1[$x],$bill_name)){
         die('Could not bind statement');
       }
       if(!$stmt->execute()){

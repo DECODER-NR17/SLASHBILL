@@ -5,6 +5,7 @@
    IF A DUPLICATE NAME OCCURS I HAVE TO CLICK SUBMIT TWICE TO GET THE ALERT MESSAGE SO IT INSERTS TWICE INTO THE DATABASE
 3. #####TO SOLVE PROBLEM 2. I HAVE INSERTED DISTINCT IN ALL THE SQL QUERIES-->
 <?php
+	session_start();
 	include_once 'includes/dbh.inc.php';
 ?>
 <!DOCTYPE html>
@@ -27,6 +28,7 @@
           <div class="float-left">&nbsp;</div>
           <div class="float-left col-heading">Name</div>
           </div>
+					<label>NAME OF BILL</label><input type="text" class="bill_n" name="bill" pattern="[a-zA-Z][a-zA-Z ]{2,}" required=""/>
           <div id="members">
           <?php require_once("ajax_php/input.php") ?>
           </div>

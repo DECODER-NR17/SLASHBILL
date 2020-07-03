@@ -7,7 +7,7 @@
 	<body>
 		<div class=container>
 			<h1 align=center>SLASH BILL</h1>
-			<a href="addmem.php">
+			<a href="select_add.php">
 			<img src="img/create.png" alt="CREATE" class="centre" width="100" height="100" >
 			</a>
 		</div>

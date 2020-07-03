@@ -1,10 +1,17 @@
 <?php
+session_start();
 // include_once '*/includes/dbh.inc.php';
 $conn= mysqli_connect("localhost","root","","slashbill");
 
-$query="SELECT member,SUM(receive-give) FROM slashbill AS member GROUP BY member;";
+//yaha bhi tho name of bill chaie
+if(isset($_SESSION['bill'])){
+  $bill_name=$_SESSION['bill'];
+}
+// print_r($bill_name);
+$query="SELECT member,SUM(receive-give) FROM slashbill  AS member WHERE bill_name='$bill_name' GROUP BY member ;";
 //$query="SELECT SUM(receive-give) FROM slashbill WHERE member='EH';";
-$query_result=mysqli_query($conn,$query);
+echo $bill_name;
+$query_result=mysqli_query($conn,$query) or die(mysqli_error($conn));
 echo "<table>
 <tr>
 <th>NAME</th>
