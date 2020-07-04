@@ -5,8 +5,12 @@
     $paid1=$_POST['paid'];
     $receive = array();
     $give = array();
+    if(isset($_SESSION['bill'])){
+      $bill_name=$_SESSION['bill'];
+    }
     $conn = mysqli_connect("localhost","root","","slashbill");
-    $data = mysqli_query($conn,'SELECT COUNT(DISTINCT member1) AS num FROM `member`') or die(mysqli_error());
+    $s="SELECT COUNT(member1) AS num FROM member WHERE bill_name='$bill_name'";
+    $data = mysqli_query($conn,$s) or die(mysqli_error());
     $row = mysqli_fetch_assoc($data);
     $count = $row['num'];
     foreach($paid1 as $value ){
