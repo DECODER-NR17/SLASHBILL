@@ -9,6 +9,7 @@
   </head>
   <body>
     <div class="container">
+      <h1 align=center>SLASH BILL</h1>
       <h4 align=center> SELECT BILL OR CREATE NEW BILL</h4>
       <!-- selection option and on clicking select should take you to addbill.php -->
       <form align="center" action="addbill.php" method="POST">

@@ -5,7 +5,7 @@ body{
 }
 .container{
   height: 700px;
-  width: 400px;
+  width: 500px;
   margin: 100px auto;
   background: #f7f7f7;
   box-shadow: 0 0 3px rgba(0,0,0,0.1);
@@ -15,6 +15,9 @@ body{
   -moz-border-radius:20px;
 }
 
+#select{
+  margin:100px auto;
+}
 h1{
   background: #1F030C;
   color: white;
@@ -33,4 +36,7 @@ img {
   margin-top:200px;
   margin-left: auto;
   margin-right: auto;
+  position:relative;
+  align:center;
+  margin:100px auto
 }

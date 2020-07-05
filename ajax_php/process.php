@@ -1,18 +1,31 @@
 <?php
     session_start();
+
     include_once 'includes/dbh.inc.php';
+
     $netpaid=$_POST['netpaid'];
     $paid1=$_POST['paid'];
     $receive = array();
     $give = array();
+
+    //for selecting the billing cycle according to the user
     if(isset($_SESSION['bill'])){
       $bill_name=$_SESSION['bill'];
     }
+    // if some of the members are not included in the billing cycle
+    if(isset($_POST['mem_index'])){
+      $_SESSION['mem_index']=$_POST['mem_index'];
+      foreach ($_SESSION['mem_index'] as $value) {
+        $index[]=$value;
+      }
+    }
+
     $conn = mysqli_connect("localhost","root","","slashbill");
     $s="SELECT COUNT(member1) AS num FROM member WHERE bill_name='$bill_name'";
     $data = mysqli_query($conn,$s) or die(mysqli_error());
     $row = mysqli_fetch_assoc($data);
-    $count = $row['num'];
+    $count = $row['num']-count($index);
+
     foreach($paid1 as $value ){
         if($netpaid>0){
           $individualbill=floatval($netpaid/$count);
@@ -31,25 +44,28 @@
           }
         }
     }
+
     if(isset($_SESSION['bill'])){
       $bill_name=$_SESSION['bill'];
     }
+
     $conn= mysqli_connect("localhost","root","","slashbill");
     $sql = "INSERT INTO slashbill (member,give,receive,paid,bill_name) VALUES (?,?,?,?,?)";
-    $q="SELECT DISTINCT member1 FROM member WHERE bill_name='$bill_name';";
+
+    $q="SELECT member1 FROM member WHERE bill_name='$bill_name';";
     $q_r=mysqli_query($conn,$q);
     $name=array();
     while($row = mysqli_fetch_array($q_r)){
-      echo $row['member1'];
       $name[]=$row['member1'];
+      for ($i=0; $i < count($index) ; $i++) {
+        $q=$index[$i];
+        if(in_array($q,$name)){
+          $key=array_search($q,$name);
+          array_splice($name,$key);
+        }
+      }
+      print_r($name);
     }
-    // PROBLEM:
-    // I AM ABLE TO EXTRACT THE MEMBERS1 FROM MEMBER TABLE
-    // BUT I NEED THE NAMES OF JUST THAT VALUE WHICH IS NOT SELECTED BY THE USER I.E {THE NAMES OF THE MEMBERS BETWEEN WHICH THE BILL IS SPLIT}
-    // IF I DONOT WANT TO SPLIT BILL BETWEEN SOMEONE I SHOULD BE ABLE TO SELECT THEM AND THEN SEND THE ARRAY POSITION INTO PROCESS.php
-    // SO THAT I WOULD DO THE CALCULATION ACCORDING todo
-    // 1. NUMBER OF MEMBERS
-    // 2. INSERT INTO SLASHBILL JUST THE NAMES BETWEEN WHICH THE BILL IS BEING SPLIT THE VALUES ARE CORRECTLY INSERTED
 
     for($x = 0; $x <count($name); $x++){
       $stmt = $conn->prepare($sql);
